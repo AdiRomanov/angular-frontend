@@ -39,6 +39,7 @@
         label="SIGN IN"
         styleClass="w-full"
         [disabled]="loginForm.invalid"
+        (click)="onLogin()"
         type="submit"
       ></p-button>
       <div class="mt-2">Not a member? <a routerLink="/register">Register</a></div>

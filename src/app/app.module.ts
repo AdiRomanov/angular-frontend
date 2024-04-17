@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -14,6 +13,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToastModule } from 'primeng/toast';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MessageService } from 'primeng/api';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './services/auth.interceptor'; 
 
 
 @NgModule({
@@ -34,7 +35,10 @@ import { MessageService } from 'primeng/api';
     ToastModule,
     BrowserAnimationsModule
   ],
-  providers: [MessageService],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    MessageService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

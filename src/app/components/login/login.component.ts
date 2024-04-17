@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+
+
 
 @Component({
   selector: 'app-login',
@@ -12,7 +16,7 @@ export class LoginComponent {
     password: ['', [Validators.required]]
   })
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {}
 
   get email() {
     return this.loginForm.controls['email'];
@@ -20,5 +24,20 @@ export class LoginComponent {
 
   get password() {
     return this.loginForm.controls['password'];
+  }
+
+  onLogin(): void {
+    if (this.loginForm.valid) {
+      const email = this.email.value || ''; // Fallback to empty string if null
+      const password = this.password.value || ''; // Similarly for password
+      console.log(email)
+      console.log(password)
+
+      this.authService.login(email, password).subscribe(success => {
+        if (success) {
+          this.router.navigate(['/']); // Navigate to home or dashboard page
+        }
+      });
+    }
   }
 }
