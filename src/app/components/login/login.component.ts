@@ -30,12 +30,10 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const email = this.email.value || ''; // Fallback to empty string if null
       const password = this.password.value || ''; // Similarly for password
-      console.log(email)
-      console.log(password)
 
       this.authService.login(email, password).subscribe(success => {
         if (success) {
-          this.router.navigate(['/']); // Navigate to home or dashboard page
+          this.router.navigate(['/dashboard']); // Navigate to home or dashboard page
         }
       });
     }

@@ -14,7 +14,9 @@ import { ToastModule } from 'primeng/toast';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MessageService } from 'primeng/api';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from './services/auth.interceptor'; 
+import { AuthInterceptor } from './services/auth.interceptor';
+import { LayoutComponent } from './components/layout/layout.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component'; 
 
 
 @NgModule({
@@ -23,6 +25,8 @@ import { AuthInterceptor } from './services/auth.interceptor';
     LoginComponent,
     RegisterComponent,
     HomeComponent,
+    LayoutComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
