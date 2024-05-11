@@ -7,7 +7,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastModule } from 'primeng/toast';
@@ -16,7 +16,12 @@ import { MessageService } from 'primeng/api';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { LayoutComponent } from './components/layout/layout.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component'; 
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MyIngredientsComponent } from './components/my-ingredients/my-ingredients.component';
+
 
 
 @NgModule({
@@ -27,6 +32,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     HomeComponent,
     LayoutComponent,
     DashboardComponent,
+    NavigationComponent,
+    MyIngredientsComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,11 +44,17 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     ButtonModule,
     HttpClientModule,
     ToastModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    FormsModule
+  ],
+  exports: [
+    MatToolbarModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    MessageService
+    MessageService,
+    provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]
 })

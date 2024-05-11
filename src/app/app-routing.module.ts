@@ -6,6 +6,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AuthGuard } from './guards/auth.guard';
 import { LayoutComponent } from './components/layout/layout.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { MyIngredientsComponent } from './components/my-ingredients/my-ingredients.component';
 
 const routes: Routes = [
   {
@@ -32,7 +33,13 @@ const routes: Routes = [
         path: 'dashboard',
         component: DashboardComponent,
         canActivate: [AuthGuard]
-      }
+      },
+      {
+        path: 'my-ingredients',
+        component: MyIngredientsComponent,
+        canActivate: [AuthGuard]
+      },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   },
   {

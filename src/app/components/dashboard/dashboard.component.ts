@@ -9,12 +9,13 @@ import { Component } from '@angular/core';
 export class DashboardComponent {
   posts: any[]=[];
   constructor(private http: HttpClient) {
-    this.loadPosts();
+    //this.loadPosts();
   }
 
-  loadPosts() {
-    this.http.get('http://127.0.0.1:8000/posts').subscribe((res:any) => {
-      this.posts = res.data;
-    })
-  }
+  // loadPosts() {
+  //   this.http.get('http://127.0.0.1:8000/posts').subscribe((res:any) => {
+  //     this.posts = res.data;
+  //   })
+  //}
+  
 }

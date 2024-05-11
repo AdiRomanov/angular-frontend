@@ -4,6 +4,14 @@ import { User } from '../interfaces/auth';
 import { AuthResponse } from '../interfaces/auth-response.interface';
 import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
+import { jwtDecode } from 'jwt-decode';
+
+interface TokenInterface {
+  user_id: number; // Define other properties based on your token's payload
+  exp?: number;
+ 
+}
+
 
 
 @Injectable({
@@ -48,6 +56,19 @@ export class AuthService {
 
   public getToken(): string | null{
     return localStorage.getItem('token');
+  }
+
+  getCurrentUserId(): number | null {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+
+    try {
+      const decoded = jwtDecode<TokenInterface>(token);
+      return decoded.user_id; // Assuming 'user_id' is the name of the payload property containing the user ID
+    } catch (error) {
+      console.error('Failed to decode token', error);
+      return null;
+    }
   }
 
 }
