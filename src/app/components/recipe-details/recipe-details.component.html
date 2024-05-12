@@ -1,0 +1,21 @@
+<!-- src/app/recipe-details/recipe-details.component.html -->
+<div class="main-container">
+<div *ngIf="recipe; else loading" class="recipe-details">
+    
+    <h1>{{ recipe.name }}</h1>
+    <p class="cook-time"><strong>Cook Time:</strong> {{ recipe.cook_time }} minutes</p>
+    <div class="ingredients-section">
+      <h2>Ingredients</h2>
+      <ul>
+        <li *ngFor="let ingredient of recipe.ingredients">{{ ingredient }}</li>
+      </ul>
+    </div>
+    <div class="directions-section">
+      <h2>Directions</h2>
+      <p>{{ recipe.directions }}</p>
+    </div>
+  </div>
+  <ng-template #loading>
+    <div class="loading-state">Loading recipe details...</div>
+  </ng-template>
+</div>

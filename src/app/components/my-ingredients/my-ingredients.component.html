@@ -1,20 +1,32 @@
 <!-- my-ingredients.component.html -->
-<div class="container">
-  <input type="text" placeholder="Search ingredients..." [(ngModel)]="searchTerm" (input)="filterIngredients()">
-  
-  <h2>All Ingredients</h2>
-  <div class="ingredients-list">
-    <div *ngFor="let ingredient of filteredIngredients" class="ingredient-item">
-      {{ ingredient.ingredient }}
-      <button (click)="addIngredient(ingredient.id)">Add</button>
+<div class="main-container">
+  <div class="container">
+    <input type="text" placeholder="Search ingredients..." [(ngModel)]="searchTerm" (input)="filterIngredients()">
+    
+    <h2>All Ingredients</h2>
+    <div class="ingredients-list">
+      <div *ngIf="filteredIngredients.length; else noResults">
+        <div *ngFor="let ingredient of filteredIngredients" class="ingredient-item">
+          {{ ingredient.ingredient }}
+          <button (click)="addIngredient(ingredient.id)">Add</button>
+        </div>
+      </div>
+      <ng-template #noResults>
+        <div class="empty-state">No ingredients found.</div>
+      </ng-template>
     </div>
-  </div>
 
-  <h2>My Ingredients</h2>
-  <div class="ingredients-list">
-    <div *ngFor="let ingredient of userIngredients" class="ingredient-item">
-      {{ ingredient.ingredient }}
-      <button (click)="removeIngredient(ingredient.id)">Remove</button>
+    <h2>My Ingredients</h2>
+    <div class="ingredients-list">
+      <div *ngIf="userIngredients.length; else noUserIngredients">
+        <div *ngFor="let ingredient of userIngredients" class="ingredient-item">
+          {{ ingredient.ingredient }}
+          <button (click)="removeIngredient(ingredient.id)">Remove</button>
+        </div>
+      </div>
+      <ng-template #noUserIngredients>
+        <div class="empty-state">You have no ingredients added.</div>
+      </ng-template>
     </div>
   </div>
 </div>

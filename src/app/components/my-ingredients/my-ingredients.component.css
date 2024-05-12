@@ -1,30 +1,85 @@
 /* my-ingredients.component.css */
+body {
+  padding-top: 10px; /* Adjust based on the height of your fixed navbar */
+}
 .container {
-    display: flex;
-    flex-direction: column;
-    max-width: 600px;
-    margin: auto;
-  }
-  
-  .ingredients-list {
-    max-height: 300px;
-    overflow-y: scroll;
-    border: 1px solid #ccc;
-    margin-bottom: 20px;
-  }
-  
-  .ingredient-item {
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  input[type="text"] {
-    padding: 10px;
-    width: 100%;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-  }
-  
+  margin-top: 20px; /* Additional space if needed */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  max-width: 600px; /* Centering the container */
+  margin: auto;
+  padding: 20px;
+  background: #f9f9f9; /* Light grey background for the container */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Soft shadow for depth */
+  border-radius: 8px; /* Rounded corners for the container */
+}
+
+.ingredients-list {
+  min-height: 225px; /* Ensures the container does not collapse */
+  max-height: 225px; /* Keeps it to exactly 5 items tall */
+  min-width:  420px;
+  overflow-y: auto; /* Allows scrolling when there are more than 5 items */
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+  background: white;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+  border-radius: 4px;
+}
+
+
+.ingredient-item {
+  height: 45px; /* Fixed height, adjust based on actual content and padding */
+  padding: 12px 10px; /* Slightly larger padding for better touch targets */
+  border-bottom: 1px solid #eee; /* Lighter border for items */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.ingredient-item:hover {
+  background-color: #f0f0f0; /* Light grey background on hover */
+  box-sizing: border-box;
+}
+
+input[type="text"] {
+  margin-top: 20%;
+  padding: 12px 10px;
+  width: 100%;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  border: 1px solid #ccc; /* Defined border for input */
+  border-radius: 4px; /* Rounded corners for input */
+  outline: none; /* Removes the default focus outline */
+}
+
+input[type="text"]:focus {
+  border-color: #0056b3; /* Blue border for focus */
+  box-shadow: 0 0 0 2px rgba(0,86,179,0.2); /* Subtle blue shadow on focus */
+}
+
+button {
+  padding: 8px 16px;
+  background-color: #007bff; /* Bootstrap blue for buttons */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+
+.empty-state {
+  margin-top: 20%; /* Space between the list and the empty state */
+  height: 100%; /* Fill the parent container */
+  display: flex;
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  color: #666; /* Subtle text color */
+  font-style: italic;
+}

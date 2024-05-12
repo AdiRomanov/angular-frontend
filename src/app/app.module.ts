@@ -21,6 +21,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MyIngredientsComponent } from './components/my-ingredients/my-ingredients.component';
+import { AllRecipesComponent } from './components/all-recipes/all-recipes.component';
+import { RecipeDetailsComponent } from './components/recipe-details/recipe-details.component';
 
 
 
@@ -34,6 +36,8 @@ import { MyIngredientsComponent } from './components/my-ingredients/my-ingredien
     DashboardComponent,
     NavigationComponent,
     MyIngredientsComponent,
+    AllRecipesComponent,
+    RecipeDetailsComponent,
   ],
   imports: [
     BrowserModule,

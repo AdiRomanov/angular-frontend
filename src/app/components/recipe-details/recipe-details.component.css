@@ -1,0 +1,61 @@
+/* src/app/recipe-details/recipe-details.component.css */
+.main-container {
+    padding-top: 50px;  
+    height: 100vh; 
+    overflow-y: auto;  
+  }
+
+.recipe-details {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    border-radius: 8px;
+  }
+  
+  .recipe-details h1 {
+    color: #333;
+    font-size: 28px;
+  }
+  
+  .cook-time {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  .ingredients-section h2,
+  .directions-section h2 {
+    color: #444;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 5px;
+    margin-top: 20px;
+  }
+  
+  .ingredients-section ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .ingredients-section li {
+    background: #f3f0f0;
+    margin-bottom: 5px;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .directions-section p {
+    white-space: pre-wrap; /* Ensures that formatting and spacing in directions are preserved */
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    line-height: 1.6;
+  }
+  
+  .loading-state {
+    text-align: center;
+    padding: 20px;
+    font-size: 18px;
+  }
+  

@@ -1,6 +1,6 @@
 // ingredient.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
@@ -16,9 +16,13 @@ export class IngredientService {
   getIngredients(): Observable<any> {
     return this.http.get(`${this.apiUrl}/ingredients`);
   }
+  getIngredientsById(id: number): Observable<any> {
 
-  getUserIngredients(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/user-ingredients`);
+    return this.http.get(`${this.apiUrl}/ingredients/${id}`);
+  }
+
+  getUserIngredients(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/user-ingredients/${id}`);
   }
 
   addUserIngredient(ingredientId: number): Observable<any> {
@@ -30,7 +34,8 @@ export class IngredientService {
     });
   }
 
-  deleteUserIngredient(ingredientId: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/user-ingredients/${ingredientId}`);
+  deleteUserIngredient(ingredient_id: number): Observable<any> {
+    
+   return this.http.delete(`${this.apiUrl}/user-ingredients/${ingredient_id}`);
   }
 }

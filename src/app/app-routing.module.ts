@@ -7,6 +7,8 @@ import { AuthGuard } from './guards/auth.guard';
 import { LayoutComponent } from './components/layout/layout.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MyIngredientsComponent } from './components/my-ingredients/my-ingredients.component';
+import { AllRecipesComponent } from './components/all-recipes/all-recipes.component';
+import { RecipeDetailsComponent } from './components/recipe-details/recipe-details.component';
 
 const routes: Routes = [
   {
@@ -39,6 +41,12 @@ const routes: Routes = [
         component: MyIngredientsComponent,
         canActivate: [AuthGuard]
       },
+      {
+        path: 'all-recipes',
+        component: AllRecipesComponent,
+        canActivate: [AuthGuard]
+      },
+      { path: 'recipes/:id', component: RecipeDetailsComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   },

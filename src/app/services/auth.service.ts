@@ -12,8 +12,6 @@ interface TokenInterface {
  
 }
 
-
-
 @Injectable({
   providedIn: 'root'
 })
