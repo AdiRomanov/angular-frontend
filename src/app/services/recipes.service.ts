@@ -19,4 +19,10 @@ export class RecipesService {
   getRecipeById(id: any): Observable<any> {
     return this.http.get(`${this.apiUrl}/recipes/${id}`);
   }
+
+  getRecipeMatches(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/recipes/recipe-matches/`);
+  }
+
+  
 }

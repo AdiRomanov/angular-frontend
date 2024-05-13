@@ -9,6 +9,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MyIngredientsComponent } from './components/my-ingredients/my-ingredients.component';
 import { AllRecipesComponent } from './components/all-recipes/all-recipes.component';
 import { RecipeDetailsComponent } from './components/recipe-details/recipe-details.component';
+import { RecipeMatchesComponent } from './components/recipe-matches/recipe-matches.component';
 
 const routes: Routes = [
   {
@@ -20,17 +21,15 @@ const routes: Routes = [
     component: RegisterComponent
   },
   {
-    path: 'home',
-    component: HomeComponent,
-    //canActivate: [AuthGuard]
-  },
-  {
-    path: '', redirectTo: 'home', pathMatch: 'full'
-  },
-  {
     path: '',
     component: LayoutComponent,
     children: [
+      
+      {
+        path: 'home',
+        component: HomeComponent,
+        canActivate: [AuthGuard]
+      },
       {
         path: 'dashboard',
         component: DashboardComponent,
@@ -46,6 +45,11 @@ const routes: Routes = [
         component: AllRecipesComponent,
         canActivate: [AuthGuard]
       },
+      { path: 'recipe-matches',
+       component: RecipeMatchesComponent,
+       canActivate: [AuthGuard]
+      },
+      
       { path: 'recipes/:id', component: RecipeDetailsComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]

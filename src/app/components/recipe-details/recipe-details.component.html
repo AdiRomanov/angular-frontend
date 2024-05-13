@@ -1,13 +1,18 @@
 <!-- src/app/recipe-details/recipe-details.component.html -->
 <div class="main-container">
-<div *ngIf="recipe; else loading" class="recipe-details">
-    
+  <div *ngIf="recipe; else loading" class="recipe-details">
     <h1>{{ recipe.name }}</h1>
     <p class="cook-time"><strong>Cook Time:</strong> {{ recipe.cook_time }} minutes</p>
     <div class="ingredients-section">
       <h2>Ingredients</h2>
       <ul>
-        <li *ngFor="let ingredient of recipe.ingredients">{{ ingredient }}</li>
+        <li *ngFor="let ingredient of recipe.ingredients" 
+                      [class.has-ingredient]="ingredient.hasIngredient"
+                      [class.missing-ingredient]="!ingredient.hasIngredient">
+          <span>{{ ingredient.name }}</span>
+          <button *ngIf="!ingredient.hasIngredient" (click)="addToShoppingList(ingredient)">Add to List</button>
+        </li>
+        
       </ul>
     </div>
     <div class="directions-section">

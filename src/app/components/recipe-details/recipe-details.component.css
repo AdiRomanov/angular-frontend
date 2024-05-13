@@ -39,11 +39,39 @@
   }
   
   .ingredients-section li {
-    background: #f3f0f0;
-    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between; /* Ensures space between items */
+    align-items: center; /* Align items vertically in the center */
     padding: 10px;
+    background: #f3f0f0;
     border-radius: 5px;
+    margin-bottom: 5px;
   }
+  
+  .ingredients-section li span {
+    flex-grow: 1; /* Allows the ingredient name to take up any available space */
+    margin-right: 10px; /* Adds some margin to the right of the ingredient name */
+  }
+  
+  .ingredients-section li button {
+    white-space: nowrap; /* Ensures the button text does not wrap */
+    padding: 5px 10px;       /* Adjust padding for aesthetics */
+    background-color: #007bff; /* Primary blue color, change as needed */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .ingredients-section li button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+
+  .ingredients-section span {
+    color: #333; /* Ensures text is visible against a light background */
+    font-size: 16px; /* Adequate font size for readability */
+  }
+  
   
   .directions-section p {
     white-space: pre-wrap; /* Ensures that formatting and spacing in directions are preserved */
@@ -59,3 +87,14 @@
     font-size: 18px;
   }
   
+  /* src/app/recipe-details/recipe-details.component.css */
+ 
+  .ingredients-section li.has-ingredient {
+    
+    background-color: rgb(115, 238, 115); /* Optional: override the background if necessary */
+}
+
+.ingredients-section li.missing-ingredient {
+    
+    background-color: rgb(240, 105, 105); /* Optional: override the background if necessary */
+}

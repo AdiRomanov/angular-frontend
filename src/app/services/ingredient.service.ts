@@ -34,6 +34,13 @@ export class IngredientService {
     });
   }
 
+  addToShoppingList(ingredientId: number): Observable<any> {
+    const userId = this.authService.getCurrentUserId();
+    return this.http.post(`${this.apiUrl}/shopping-list`, {
+       user_id: userId,
+       ingredientId: ingredientId });
+  }
+
   deleteUserIngredient(ingredient_id: number): Observable<any> {
     
    return this.http.delete(`${this.apiUrl}/user-ingredients/${ingredient_id}`);

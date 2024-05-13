@@ -23,6 +23,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MyIngredientsComponent } from './components/my-ingredients/my-ingredients.component';
 import { AllRecipesComponent } from './components/all-recipes/all-recipes.component';
 import { RecipeDetailsComponent } from './components/recipe-details/recipe-details.component';
+import { RecipeMatchesComponent } from './components/recipe-matches/recipe-matches.component';
 
 
 
@@ -38,6 +39,7 @@ import { RecipeDetailsComponent } from './components/recipe-details/recipe-detai
     MyIngredientsComponent,
     AllRecipesComponent,
     RecipeDetailsComponent,
+    RecipeMatchesComponent,
   ],
   imports: [
     BrowserModule,

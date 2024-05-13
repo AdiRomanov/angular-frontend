@@ -1,0 +1,11 @@
+<!-- src/app/recipe-matches/recipe-matches.component.html -->
+<div class="recipe-container">
+    <h2>Recipe Matches</h2>
+    <ul class="recipe-list">
+      <li *ngFor="let recipe of recipes" (click)="navigateToRecipe(recipe.id)">
+        <h3>{{ recipe.name }}</h3>
+        <p>Match Percentage: {{ recipe.match_percentage }}%</p>
+      </li>
+    </ul>
+  </div>
+  
