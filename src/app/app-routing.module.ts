@@ -10,6 +10,7 @@ import { MyIngredientsComponent } from './components/my-ingredients/my-ingredien
 import { AllRecipesComponent } from './components/all-recipes/all-recipes.component';
 import { RecipeDetailsComponent } from './components/recipe-details/recipe-details.component';
 import { RecipeMatchesComponent } from './components/recipe-matches/recipe-matches.component';
+import { ShoppingListComponent } from './components/shopping-list/shopping-list.component';
 
 const routes: Routes = [
   {
@@ -50,7 +51,14 @@ const routes: Routes = [
        canActivate: [AuthGuard]
       },
       
-      { path: 'recipes/:id', component: RecipeDetailsComponent },
+      { path: 'recipes/:id',
+        component: RecipeDetailsComponent,
+        canActivate: [AuthGuard]},
+      {
+        path: 'shopping-list',
+        component: ShoppingListComponent,
+        canActivate: [AuthGuard]
+      },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   },

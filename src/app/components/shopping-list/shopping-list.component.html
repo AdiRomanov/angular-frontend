@@ -1,0 +1,14 @@
+<div class="container">
+  <h2>Shopping List</h2>
+  <div class="scrollable-box" *ngIf="shoppingList.length > 0; else emptyList">
+    <ul class="shopping-list">
+      <li *ngFor="let item of shoppingList">
+        {{ item.ingredient }}
+        <button (click)="removeItem(item.id)">Remove</button>
+      </li>
+    </ul>
+  </div>
+  <ng-template #emptyList>
+    <p class="empty-placeholder">Your shopping list is empty.</p>
+  </ng-template>
+</div>

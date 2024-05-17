@@ -1,19 +1,26 @@
-<!-- src/app/recipe-details/recipe-details.component.html -->
 <div class="main-container">
   <div *ngIf="recipe; else loading" class="recipe-details">
     <h1>{{ recipe.name }}</h1>
     <p class="cook-time"><strong>Cook Time:</strong> {{ recipe.cook_time }} minutes</p>
     <div class="ingredients-section">
       <h2>Ingredients</h2>
-      <ul>
-        <li *ngFor="let ingredient of recipe.ingredients" 
-                      [class.has-ingredient]="ingredient.hasIngredient"
-                      [class.missing-ingredient]="!ingredient.hasIngredient">
-          <span>{{ ingredient.name }}</span>
-          <button *ngIf="!ingredient.hasIngredient" (click)="addToShoppingList(ingredient)">Add to List</button>
-        </li>
-        
-      </ul>
+      <div *ngIf="isFetching; else ingredientsList">
+        <div class="loading-state">Loading ingredients...</div>
+      </div>
+      <ng-template #ingredientsList>
+        <ul>
+          <li *ngFor="let ingredient of recipe.ingredients" 
+              [class.has-ingredient]="ingredient.hasIngredient && !ingredient.inShoppingList"
+              [class.in-shopping-list]="ingredient.inShoppingList"
+              [class.missing-ingredient]="!ingredient.hasIngredient && !ingredient.inShoppingList">
+            <span>{{ ingredient.name }}</span>
+            <ng-container *ngIf="!ingredient.hasIngredient && !ingredient.inShoppingList">
+              <button *ngIf="!ingredient.inShoppingList" (click)="addToShoppingList(ingredient.name)">Add to List</button>
+            </ng-container>
+            <span *ngIf="ingredient.inShoppingList" class="added-text">In Shopping List</span>
+          </li>
+        </ul>
+      </ng-template>
     </div>
     <div class="directions-section">
       <h2>Directions</h2>

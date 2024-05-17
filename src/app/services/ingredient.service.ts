@@ -25,6 +25,10 @@ export class IngredientService {
     return this.http.get(`${this.apiUrl}/user-ingredients/${id}`);
   }
 
+  getIngredientByName(name: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/ingredients/ingredient-by-name/${name}`);
+  }
+
   addUserIngredient(ingredientId: number): Observable<any> {
     const userId = this.authService.getCurrentUserId();
     
