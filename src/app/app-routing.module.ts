@@ -11,6 +11,7 @@ import { AllRecipesComponent } from './components/all-recipes/all-recipes.compon
 import { RecipeDetailsComponent } from './components/recipe-details/recipe-details.component';
 import { RecipeMatchesComponent } from './components/recipe-matches/recipe-matches.component';
 import { ShoppingListComponent } from './components/shopping-list/shopping-list.component';
+import { FavoriteRecipesComponent } from './components/favorite-recipes/favorite-recipes.component';
 
 const routes: Routes = [
   {
@@ -57,6 +58,11 @@ const routes: Routes = [
       {
         path: 'shopping-list',
         component: ShoppingListComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'favorite-recipes',
+        component: FavoriteRecipesComponent,
         canActivate: [AuthGuard]
       },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
