@@ -33,7 +33,7 @@ export class ShoppingListComponent implements OnInit {
         forkJoin(ingredientObservables).subscribe((results: any[]) => { // Explicitly type results as an array of any[]
          
           this.shoppingList = results;
-          console.log('Shopping list:', this.shoppingList);
+          
         });
       },
       error => {

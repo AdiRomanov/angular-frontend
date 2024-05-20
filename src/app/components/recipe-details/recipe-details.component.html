@@ -1,11 +1,16 @@
 <div class="main-container">
   <div *ngIf="recipe; else loading" class="recipe-details">
     <h1>{{ recipe.name }}</h1>
-    <p class="cook-time"><strong>Cook Time:</strong> {{ recipe.cook_time }} minutes</p>
+    <p class="cook-time">
+      <strong>Cook Time:</strong> {{ recipe.cook_time }} minutes
+      <button class="favorite-button" (click)="toggleFavorite()">
+        <i [ngClass]="isFavorite ? 'fas fa-heart' : 'far fa-heart'"></i>
+      </button>
+    </p>
     <div class="ingredients-section">
       <h2>Ingredients</h2>
       <div *ngIf="isFetching; else ingredientsList">
-        <div class="loading-state">Loading ingredients...</div>
+        <div class="loading-spinner"></div>
       </div>
       <ng-template #ingredientsList>
         <ul>
@@ -17,7 +22,7 @@
             <ng-container *ngIf="!ingredient.hasIngredient && !ingredient.inShoppingList">
               <button *ngIf="!ingredient.inShoppingList" (click)="addToShoppingList(ingredient.name)">Add to List</button>
             </ng-container>
-            <span *ngIf="ingredient.inShoppingList" class="added-text">In Shopping List</span>
+            <a *ngIf="ingredient.inShoppingList" routerLink="/shopping-list" class="added-text">In Shopping List</a>
           </li>
         </ul>
       </ng-template>
@@ -28,6 +33,6 @@
     </div>
   </div>
   <ng-template #loading>
-    <div class="loading-state">Loading recipe details...</div>
+    <div class="loading-spinner"></div>
   </ng-template>
 </div>

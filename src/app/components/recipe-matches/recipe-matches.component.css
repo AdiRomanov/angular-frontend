@@ -1,4 +1,12 @@
 /* src/app/recipe-matches/recipe-matches.component.css */
+.container{
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 600px;
+  background: #f9f9f9;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
 .recipe-container {
     max-width: 800px;
     margin: auto;
@@ -30,3 +38,10 @@
     background-color: #eee; /* Highlight on hover */
   }
   
+  .empty-placeholder {
+    margin: auto;
+    text-align: center;
+    padding: 20px;
+    font-size: 18px;
+    color: #666;
+  }

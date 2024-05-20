@@ -4,6 +4,7 @@ import { RecipesService } from '../../services/recipes.service';
 import { IngredientService } from '../../services/ingredient.service';
 import { ShoppingListService } from '../../services/shopping-list.service';
 import { AuthService } from '../../services/auth.service';
+import { FavoriteRecipesService } from '../../services/favorite-recipes.service'; // Import FavoritesService
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -18,13 +19,15 @@ export class RecipeDetailsComponent implements OnInit {
   enrichedIngredients: any[] = []; // To hold the enriched details with marking
   shoppingList: Set<number> = new Set(); // To track ingredients in the shopping list
   isFetching = true;
+  isFavorite = false; // To track if the recipe is a favorite
 
   constructor(
     private route: ActivatedRoute,
     private recipesService: RecipesService,
     private ingredientService: IngredientService,
     private authService: AuthService,
-    private shoppingListService: ShoppingListService
+    private shoppingListService: ShoppingListService,
+    private favoritesService: FavoriteRecipesService // Inject FavoritesService
   ) { }
 
   ngOnInit(): void {
@@ -71,12 +74,22 @@ export class RecipeDetailsComponent implements OnInit {
             throw error;
           }
         })
+      ),
+      isFavorite: this.favoritesService.isFavorite(recipeId).pipe(
+        catchError(error => {
+          if (error.status === 404) {
+            return of(false);
+          } else {
+            throw error;
+          }
+        })
       )
     }).subscribe({
       next: (results) => {
         this.recipe = results.recipe;
         this.userIngredients = new Set(results.userIngredients.map((item: { ingredient_id: number }) => item.ingredient_id));
         this.shoppingList = new Set(results.shoppingList.map((item: { ingredient_id: number }) => item.ingredient_id));
+        this.isFavorite = results.isFavorite;
         this.enrichRecipeIngredients();
       },
       error: (error) => {
@@ -88,7 +101,7 @@ export class RecipeDetailsComponent implements OnInit {
 
   enrichRecipeIngredients() {
     if (this.recipe && this.recipe.ingredients) {
-      const ingredientNames = this.recipe.ingredients.map((ingredientName: string) => ingredientName.toLowerCase());
+      const ingredientNames = this.recipe.ingredients.map((ingredientName: string) => ingredientName);
 
       const userIngredientObservables = Array.from(this.userIngredients).map(id =>
         this.ingredientService.getIngredientsById(id).pipe(
@@ -98,15 +111,46 @@ export class RecipeDetailsComponent implements OnInit {
           })
         )
       );
+      if (userIngredientObservables.length > 0) {
+        forkJoin(userIngredientObservables).subscribe(userIngredients => {
+          const enrichedUserIngredients = userIngredients.map(({ ingredient, id }) => ({
+            name: ingredient.toLowerCase(),
+            id: id,
+            hasIngredient: true,
+            inShoppingList: this.shoppingList.has(id)
+          }));
+      
+          const shoppingListObservables = Array.from(this.shoppingList).map(id =>
+            this.ingredientService.getIngredientsById(id).pipe(
+              catchError(error => {
+                console.error('Error fetching ingredient:', error);
+                return of({ ingredient: 'Unknown', id }); // Fallback value in case of error
+              })
+            )
+          );
+          
+          if (shoppingListObservables.length > 0) {
+            forkJoin(shoppingListObservables).subscribe(shoppingListIngredients => {
+              const enrichedShoppingListIngredients = shoppingListIngredients.map(({ ingredient, id }) => ({
+                name: ingredient,
+                id: id,
+                hasIngredient: false,
+                inShoppingList: true
+              }));
 
-      forkJoin(userIngredientObservables).subscribe(userIngredients => {
-        const enrichedUserIngredients = userIngredients.map(({ ingredient, id }) => ({
-          name: ingredient.toLowerCase(),
-          id: id,
-          hasIngredient: true,
-          inShoppingList: this.shoppingList.has(id)
-        }));
-
+              this.enrichedIngredients = [...enrichedUserIngredients, ...enrichedShoppingListIngredients];
+              this.markRecipeIngredients();
+              this.isFetching = false; // Set loading state to false
+            });
+          } else {
+            // If shopping list observables are empty, proceed with enriched user ingredients
+            this.enrichedIngredients = enrichedUserIngredients;
+            this.markRecipeIngredients();
+            this.isFetching = false; // Set loading state to false
+          }
+        });
+      } else {
+        // If shopping list observables are empty, proceed with enriched user ingredients
         const shoppingListObservables = Array.from(this.shoppingList).map(id =>
           this.ingredientService.getIngredientsById(id).pipe(
             catchError(error => {
@@ -116,19 +160,26 @@ export class RecipeDetailsComponent implements OnInit {
           )
         );
 
-        forkJoin(shoppingListObservables).subscribe(shoppingListIngredients => {
-          const enrichedShoppingListIngredients = shoppingListIngredients.map(({ ingredient, id }) => ({
-            name: ingredient,
-            id: id,
-            hasIngredient: false,
-            inShoppingList: true
-          }));
+        if (shoppingListObservables.length > 0) {
+          forkJoin(shoppingListObservables).subscribe(shoppingListIngredients => {
+            const enrichedShoppingListIngredients = shoppingListIngredients.map(({ ingredient, id }) => ({
+              name: ingredient,
+              id: id,
+              hasIngredient: false,
+              inShoppingList: true
+            }));
 
-          this.enrichedIngredients = [...enrichedUserIngredients, ...enrichedShoppingListIngredients];
+            this.enrichedIngredients = enrichedShoppingListIngredients;
+            this.markRecipeIngredients();
+            this.isFetching = false; // Set loading state to false
+          });
+        } else {
+          // If shopping list observables are empty, proceed with enriched user ingredients
+          this.enrichedIngredients = [];
           this.markRecipeIngredients();
           this.isFetching = false; // Set loading state to false
-        });
-      });
+        }
+      }
     }
   }
 
@@ -148,11 +199,44 @@ export class RecipeDetailsComponent implements OnInit {
   }
 
   addToShoppingList(ingredientName: string) {
+    this.isFetching = true;
     this.ingredientService.getIngredientByName(ingredientName).subscribe(ingredient => {
       this.shoppingListService.addToShoppingList(ingredient.id).subscribe(() => {
         this.shoppingList.add(ingredient.id); // Update shopping list locally
-        this.enrichRecipeIngredients(); // Update display
+        this.loadInitialData(); // Update display
       });
     });
   }
+
+  toggleFavorite() {
+    if (this.isFavorite) {
+      this.removeFromFavorites();
+    } else {
+      this.addToFavorites();
+    }
+    
+  }
+
+  addToFavorites() {
+    const recipeId = this.recipe.id;
+    const userId = this.authService.getCurrentUserId();
+
+    if (userId) {
+      this.favoritesService.addToFavorites(recipeId).subscribe(() => {
+        this.isFavorite = true;
+      });
+    }
+  }
+
+  removeFromFavorites() {
+    const recipeId = this.recipe.id;
+    const userId = this.authService.getCurrentUserId();
+
+    if (userId) {
+      this.favoritesService.removeFromFavorites(recipeId).subscribe(() => {
+        this.isFavorite = false;
+      });
+    }
+  }
+
 }

@@ -1,5 +1,6 @@
+<div class="container">
 <!-- src/app/recipe-matches/recipe-matches.component.html -->
-<div class="recipe-container">
+<div class="recipe-container" *ngIf="recipes.length > 0; else emptyList">
     <h2>Recipe Matches</h2>
     <ul class="recipe-list">
       <li *ngFor="let recipe of recipes" (click)="navigateToRecipe(recipe.id)">
@@ -7,5 +8,11 @@
         <p>Match Percentage: {{ recipe.match_percentage }}%</p>
       </li>
     </ul>
-  </div>
-  
+   
+</div>
+<ng-template #emptyList>
+  <a class="empty-placeholder" routerLink="/my-ingredients">No recipe matches.</a>
+  <br>
+  <a class="empty-placeholder" routerLink="/my-ingredients">Please add ingredients.</a>
+</ng-template>  
+</div>
