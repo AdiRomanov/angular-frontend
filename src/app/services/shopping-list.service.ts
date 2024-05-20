@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, of } from 'rxjs';
 import { AuthService } from './auth.service';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShoppingListService {
-  private apiUrl = 'http://127.0.0.1:8000'; // Adjust as necessary
+  private apiUrl = environment.apiUrl; // Adjust as necessary
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 

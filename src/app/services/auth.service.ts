@@ -5,6 +5,7 @@ import { AuthResponse } from '../interfaces/auth-response.interface';
 import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { jwtDecode } from 'jwt-decode';
+import { environment } from '../../environments/environment';
 
 interface TokenInterface {
   user_id: number; // Define other properties based on your token's payload
@@ -17,7 +18,7 @@ interface TokenInterface {
 })
 export class AuthService {
 
-  private baseUrl = 'http://localhost:8000';
+  private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
