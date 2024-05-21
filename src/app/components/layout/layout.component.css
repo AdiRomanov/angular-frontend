@@ -1,5 +1,0 @@
-.component{
-    margin-top: 60px; /* This should be equal to or greater than the height of the navigation bar */
-    width: 100%;
-    display: block; /* Ensures it takes up space below the navbar */
-  }
