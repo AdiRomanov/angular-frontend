@@ -50,7 +50,8 @@ export class AuthService {
   }
 
   public isLoggedIn(): boolean {
-    return localStorage.getItem('token') != null;
+    const token = this.getToken();
+    return !!token && !this.isTokenExpired(token);
   }
 
   public getToken(): string | null{
@@ -70,4 +71,24 @@ export class AuthService {
     }
   }
 
+  private decodeToken(token: string): any {
+    try {
+      return jwtDecode(token);
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return null;
+    }
+  }
+
+  private isTokenExpired(token: string): boolean {
+    const decoded = this.decodeToken(token);
+    if (!decoded || !decoded.exp) {
+      return true;
+    }
+    const expirationDate = decoded.exp * 1000; // Convert from seconds to milliseconds
+    return Date.now() >= expirationDate;
+  }
+  
 }
+
+
