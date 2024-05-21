@@ -25,6 +25,8 @@ import { AllRecipesComponent } from './components/all-recipes/all-recipes.compon
 import { RecipeDetailsComponent } from './components/recipe-details/recipe-details.component';
 import { RecipeMatchesComponent } from './components/recipe-matches/recipe-matches.component';
 import { ShoppingListComponent } from './components/shopping-list/shopping-list.component';
+import { FavoriteRecipesComponent } from './components/favorite-recipes/favorite-recipes.component';
+import { CommonModule } from '@angular/common';
 
 
 
@@ -42,6 +44,7 @@ import { ShoppingListComponent } from './components/shopping-list/shopping-list.
     RecipeDetailsComponent,
     RecipeMatchesComponent,
     ShoppingListComponent,
+    FavoriteRecipesComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +57,8 @@ import { ShoppingListComponent } from './components/shopping-list/shopping-list.
     ToastModule,
     BrowserAnimationsModule,
     MatToolbarModule,
-    FormsModule
+    FormsModule,
+    CommonModule
   ],
   exports: [
     MatToolbarModule
