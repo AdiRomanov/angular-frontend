@@ -209,6 +209,7 @@ export class RecipeDetailsComponent implements OnInit {
   }
 
   toggleFavorite() {
+    
     if (this.isFavorite) {
       this.removeFromFavorites();
     } else {
